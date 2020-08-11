@@ -17,28 +17,6 @@
  * }
  */
 
-// class ListNode {
-//   val: number
-//   next: ListNode | null
-//   constructor(val?: number, next?: ListNode | null) {
-//     this.val = (val === undefined ? 0 : val)
-//     this.next = (next === undefined ? null : next)
-//   }
-// }
-
-function getNumFromListNode(l: ListNode | null): number {
-  let n = 0
-  let i = 0
-
-  while (l !== null) {
-    n += (l.val + Math.pow(10, i))
-    l = l.next
-    i++
-  }
-
-  return n
-}
-
 function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | null {
   let dummyHead = new ListNode(0, null)
   let curr = dummyHead
