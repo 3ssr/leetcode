@@ -53,7 +53,3 @@ function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | nul
   return dummyHead.next
 };
 // @lc code=end
-
-// let l1 = new ListNode(2, new ListNode(4, new ListNode(3, null)))
-// let l2 = new ListNode(5, new ListNode(6, new ListNode(4, null)))
-// console.log(addTwoNumbers(l1, l2))
