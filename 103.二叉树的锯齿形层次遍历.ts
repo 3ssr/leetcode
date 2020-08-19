@@ -20,7 +20,42 @@
  */
 
 function zigzagLevelOrder(root: TreeNode | null): number[][] {
+  if (!root) {
+    return []
+  }
 
+  let level = 0
+  let result: number[][] = []
+  let nodes: any[] = [root]
+
+  while (nodes.length !== 0) {
+    let temp: any[] = []
+
+    while (nodes.length > 0) {
+      let node = nodes.pop()
+
+      if (node) {
+        if (!result[level]) {
+          result[level] = []
+        }
+
+        result[level].push(node.val)
+
+        if (level % 2 === 0) {
+          temp.push(node.left)
+          temp.push(node.right)
+        } else {
+          temp.push(node.right)
+          temp.push(node.left)
+        }
+      }
+    }
+
+    level++
+    nodes = temp
+  }
+
+  return result
 };
 // @lc code=end
 
