@@ -15,7 +15,7 @@ class Solution {
         ArrayDeque<Integer> queue = new ArrayDeque<>();
 
         public int max() {
-            return queue.getFirst();
+            return queue.peekFirst();
         }
 
         /**
@@ -23,32 +23,28 @@ class Solution {
          * @param num
          */
         public void push(int num) {
-            while (!queue.isEmpty() && queue.getLast() < num) {
-                queue.removeLast();
+            while (!queue.isEmpty() && queue.peekLast() < num) {
+                queue.pollLast();
             }
 
             queue.addLast(num);
         }
 
         /**
-         * 出队时, 如果出队的元素是队头最大元素,才需要出列
-         * 比队头最大值 小的元素, 如果是比队头先进的队, 在队头进队时已被压扁,
+         * 出队时, 如果出队的元素是队头最大元素,才需要pop掉
+         * 因为比队头小并且比队头先进队的元素, 已被压扁了
          * 如果是比队头晚进的队, 从时机上不可能比队头先被pop掉
          * @param index
          */
         public void pop(int num) {
-            if (!queue.isEmpty() && queue.getFirst() == num) {
-                queue.removeFirst();
+            if (!queue.isEmpty() && queue.peekFirst() == num) {
+                queue.pollFirst();
             }
         }
     }
 
     public int[] maxSlidingWindow(int[] nums, int k) {
-        if (nums == null || nums.length == 0) {
-            return null;
-        }
-
-        if (nums.length == 1) {
+        if (nums == null || nums.length == 0 || nums.length == 1) {
             return nums;
         }
 
