@@ -13,7 +13,7 @@ function rob(nums: number[]): number {
   // 状态: 房号
   // 操作: 偷和不偷
   // baseCase dp[0] = 0 还没偷一间房，不会拿到钱 dp[1] 偷第一间房最大值是第一间房能拿到的钱
-  // 状态转移方程 dp[i] = max(dp[i - 1] + rest, dp[i - 2] + nums[i])
+  // 状态转移方程 dp[i] = max(dp[i - 1] + rest, dp[i - 2] + nums[i - 1])
   // rest代表休息，因为有限制不能连续偷
   // 偷第i间房能拿到的最高金额 = max(偷第i-1时已经拿到最大金额了, 偷最后一间房才能拿到最高金额)
 
