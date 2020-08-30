@@ -38,15 +38,18 @@ class Solution {
             minHeap.add(maxHeap.poll());
         }
 
-        System.out.println("max");
-        System.out.println(maxHeap);
-        System.out.println("min");
-        System.out.println(minHeap);
+
 
         // 此时小根堆存放了窗口里较大的一半元素，大根堆存放了较小的一半元素
         // 排除掉删除的元素，大根堆的元素个数最多比小根堆多一个
         while (true) {
-            medians.add(k % 2 == 1 ? maxHeap.peek() : ((double) minHeap.peek() + (double) maxHeap.peek()) * 0.5);
+            double median = k % 2 == 1 ? maxHeap.peek() : ((double) minHeap.peek() + (double) maxHeap.peek()) * 0.5;
+            System.out.println("---------------");
+            System.out.printf("当前大根堆: " + maxHeap + "\n");
+            System.out.printf("当前小根堆: " + minHeap + "\n");
+            System.out.printf("当前中位数: " + median + "\n");
+
+            medians.add(median);
 
             if (right >= nums.length) {
                 break;
@@ -66,6 +69,8 @@ class Solution {
                 balance--;
             }
 
+            System.out.printf("加入元素%s, 标记删除元素%s\n", inNum, outNum);
+
             // 元素标记为要删除
             deleteNums.merge(outNum, 1, (oldVal, newVal) -> oldVal + newVal);
 
@@ -80,11 +85,13 @@ class Solution {
 
             // 大根堆元素多的添加到小根堆，使两个堆平衡
             if (balance < 0) {
+                System.out.println("取出大根堆堆顶加入到小根堆: " + maxHeap.peek());
                 minHeap.add(maxHeap.poll());
                 balance++;
             }
 
             if (balance > 0) {
+                System.out.println("取出小根堆堆顶加入到大根堆: " + minHeap.peek());
                 maxHeap.add(minHeap.poll());
                 balance--;
             }
@@ -92,20 +99,20 @@ class Solution {
             Integer maxHeapTop = deleteNums.get(maxHeap.peek());
 
             while (maxHeapTop != null && maxHeapTop > 0) {
+                System.out.println("移除大根堆头: " + maxHeap.peek());
                 deleteNums.compute(maxHeap.peek(), (key, val) -> val - 1);
                 maxHeap.poll();
                 maxHeapTop = deleteNums.get(maxHeap.peek());
-                System.out.println("移除大根堆头");
             }
 
             Integer minHeapTop = deleteNums.get(minHeap.peek());
 
             // 当堆头是被标记了删除的元素时，才需要做操作
             while (minHeapTop != null && minHeapTop > 0) {
+                System.out.println("移除小根堆头: " + minHeap.peek());
                 deleteNums.compute(minHeap.peek(), (key, val) -> val - 1);
                 minHeap.poll();
                 minHeapTop = deleteNums.get(minHeap.peek());
-                System.out.println("移除小根堆头");
             }
         }
 
@@ -113,7 +120,7 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        new Solution().medianSlidingWindow(new int[] { 1, 1, 1, 1 }, 2);
+        new Solution().medianSlidingWindow(new int[] { 8,3,4,-3,5,3,6,7 }, 3);
     }
 }
 // @lc code=end
