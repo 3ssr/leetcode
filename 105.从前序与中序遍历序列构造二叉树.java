@@ -33,10 +33,12 @@ class Solution {
 
     public TreeNode helper(int[] preorder, int[] inorder, int stop) {
         if (pre == preorder.length) {
+            System.out.println("retrun 1");
             return null;
         }
 
         if (inorder[in] == stop) {
+            System.out.printf("in = %d stop = %d\n", in, stop);
             in++;
             return null;
         }
@@ -46,6 +48,11 @@ class Solution {
         TreeNode root = new TreeNode(rootVal);
         root.left = helper(preorder, inorder, rootVal);
         root.right = helper(preorder, inorder, stop);
+
+        System.out.printf(
+            "rootVal = %d left = %d right = %d\n", 
+            rootVal, root.left != null ? root.left.val : -1, root.right != null ? root.right.val : -1
+        );
 
         return root;
     }
