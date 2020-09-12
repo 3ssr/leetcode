@@ -53,7 +53,9 @@ class Solution {
                     pre = pre.right;
                 }
 
+                // 讲右子树移植到pre节点的右子树位置
                 pre.right = curr.right;
+                // 将左子树移植到右子树位置
                 curr.right = next;
                 // 左边断掉
                 curr.left = null;
