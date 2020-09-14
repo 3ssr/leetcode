@@ -53,7 +53,7 @@ class Solution {
      * 判断树的最后一层的index位置上是否有节点
      * @param root
      * @param index
-     * @param depth
+     * @param depth 倒数第二层的深度，则最后一层的节点最大个数为2的depth次方
      * @return
     */
     private boolean isExistNode(TreeNode root, int index, int depth) {
@@ -63,8 +63,10 @@ class Solution {
             // 分割线的位置在2的depth次方除以2的位置
             int splitLine = ((1 << depth) >> 1);
 
+            // index和分界线的比较决定curr往左走还是往右走
             if (index > splitLine) {
                 curr = curr.right;
+                // 取index跟分界线的差值，可以得到在右子树里index的新位置
                 index -= splitLine;
             } else {
                 curr = curr.left;
