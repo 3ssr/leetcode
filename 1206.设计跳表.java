@@ -34,11 +34,11 @@ class Skiplist {
         Node curr = head;
         while (curr != null) {
             // 在一个层级上查找
-            while (curr != null && curr.val < target) {
+            while (curr.next != null && curr.next.val < target) {
                 curr = curr.next;
             }
 
-            if (curr.val == target) {
+            if (curr.next != null && curr.next.val == target) {
                 return true;
             }
             // 进入下一层
@@ -50,16 +50,16 @@ class Skiplist {
 
     public void add(int num) {
         // 初始level
-        int level = 0;
+        int level = -1;
+        // 找到要加入的节点的左边节点
         Node curr = head;
         while (curr != null) {
             // 在一个层级上查找
-            while (curr != null && curr.val < num) {
+            while (curr.next != null && curr.next.val < num) {
                 curr = curr.next;
             }
 
-            stack[level] = curr;
-            level++;
+            stack[++level] = curr;
             // 进入下一层
             curr = curr.down;
         }
@@ -67,10 +67,12 @@ class Skiplist {
         // 是否向上插入
         boolean insertUp = true;
         Node downNode = null;
-        while (insertUp && level > 0) {
-            Node insertNode = stack[level--];
-            insertNode.next = new Node(num, insertNode.next, downNode);
-            downNode = insertNode.next;
+        while (insertUp && level >= 0) {
+            // 要插入节点的左边节点
+            Node left = stack[level--];
+            // 右边节点就为新加入的节点，本来left的next节点成为新加入节点的next节点
+            left.next = new Node(num, left.next, downNode);
+            downNode = left.next;
             // 猜硬币是否往上插入
             insertUp = (rand.nextInt() & 1) == 0;
         }
@@ -84,12 +86,6 @@ class Skiplist {
     public boolean erase(int num) {
         boolean exists = false;
         Node curr = head;
-
-        if (curr.val == num) {
-            head = curr.next;
-            return true;
-        }
-
         while (curr != null) {
             // 在一个层级上查找
             while (curr.next != null && curr.next.val < num) {
